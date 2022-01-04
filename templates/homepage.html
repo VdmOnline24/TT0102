@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends 'base.html' %}
 
-<p>This is a paragraph.</p>
-<p>This is another paragraph.</p>
-<p>{{ Param1 }}</p>
-<p>{{ Param2 }}</p>
-</body>
-</html>
+{% block Title %}
+
+{{ Param1 }}
+
+{% endblock Title %}
+
+{% block Body %}
+
+<p><h1>{{ Param2 }}</h1></p>
+
+{% endblock Body %}
