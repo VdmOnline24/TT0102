@@ -1,0 +1,13 @@
+    <!-- Форма -->
+    <div class="row">
+        <div class="col-md-3">
+            <form action="{{ form_action }}" method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-primary">{{ form_btn_caption }}</button>
+            </form>
+        </div>
+    </div>

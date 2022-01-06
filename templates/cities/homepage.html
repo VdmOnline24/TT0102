@@ -10,23 +10,64 @@
 
     <h1>Список городов</h1>
     <div class="row">
-        <div class="col-md">
-            {% for zapis in object_list %}
-                <p>
-                    <a href="{% url 'cities:detail' pk=zapis.id %}">
-                        {{ zapis.name }}
-                    </a>
-                </p>
-            {% endfor %}
+        <div class="col-md-8">
+            <table class="table table-striped">
+                {% for zapis in page_obj %}
+                    <tr>
+                        <td class="col-md-4">
+                            <a href="{% url 'cities:detail' pk=zapis.id %}">
+                                {{ zapis.name }}
+                            </a>
+                        </td>
+                        <td class="col-md-1">
+                            <a href="{% url 'cities:update' pk=zapis.id %}">
+                                <button type="submit" class="btn btn-primary">Изменить</button>
+                            </a>
+                        </td>
+                        <td class="col-md-1">
+                            <a href="{% url 'cities:delete' pk=zapis.id %}">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </a>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+<!-- Pagination Controls from the Django Doc -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <!-- Форма -->
+    <div class="row">
+        <div class="col-md-3">
+            <form action="" method="post">
+
+                {% csrf_token %}
+        <!--    <label for="inpt_city">Город:</label><br>
+              <input type="text" id="inpt_city" name="name" value=""><br>
+        -->
+                {{ form.as_p }}
+                <input type="submit" value="Добавить">
+            </form>
         </div>
     </div>
 
-    <!-- Форма -->
-    <form action="" method="post">
-        {% csrf_token %}
-      <label for="inpt_city">Город:</label><br>
-      <input type="text" id="inpt_city" name="name" value=""><br>
-      <input type="submit" value="Submit">
-    </form>
 
 {% endblock Body %}
