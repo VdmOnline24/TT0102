@@ -16,6 +16,7 @@
   <body>
   <!-- Navbar Starts -->
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'FirstPage' %}">FindRoute</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +50,31 @@
       </div>
     </nav>
   <!-- Navbar Ends -->
+  <!--start - Обработка сообщений -->
+      {% if messages %}
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-8">
+
+                        {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endif %}
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                               <div class="alert alert-danger" role="alert">
+                                    {{ message }}
+                               </div>
+                            {% endif %}
+
+                        {% endfor %}
+
+                  </div>
+              </div>
+          </div>
+      {% endif %}
+  <!--end - Обработка сообщений -->
   <!-- Code injection -->
     <div class="container">
         {% block Body %} {% endblock Body %}
