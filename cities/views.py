@@ -19,10 +19,7 @@ __all__=[
 # Homepage func
 # Получает из бд список городов
 def homepagefunc(request, pk=None):
-#    if pk:
-#        city=City.objects.filter(id=pk).first()
-#        context={'object':city}
-#        return render(request, 'cities/detail.html', context)
+
     if request.method == 'POST':
         form = CityForm(request.POST)
         if form.is_valid():
@@ -49,13 +46,13 @@ class CityDetailView(DetailView):
 
 class CityCreateView(CreateView):
     model = City
-    form_class = CityForm
+    form_class = CityForm()
     template_name = 'cities/create.html'
     success_url = reverse_lazy('cities:homepage')
 
 class CityUpdateView(SuccessMessageMixin, UpdateView):
     model = City
-    form_class = CityForm
+    form_class = CityForm()
     template_name = 'cities/update.html'
     success_url = reverse_lazy('cities:homepage')
     success_message = "Город успешно отредактирован"

@@ -1,5 +1,6 @@
 from django.urls import path
 
+
 from cities.views import *
 
 
@@ -14,3 +15,5 @@ urlpatterns = [
     path('add/', CityCreateView.as_view(), name='create'),
 
 ]
+
+

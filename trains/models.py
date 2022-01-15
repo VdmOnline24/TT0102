@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
@@ -18,7 +19,7 @@ class Train(models.Model):
                                       on_delete=models.CASCADE,
                                       related_name='to_city_set',
                                       verbose_name='Поезд следует в')
-   def __str__(self):
+    def __str__(self):
         return f'Поезд №{self.train_name} из города {self.train_from_city}'
 
     class Meta:
@@ -28,3 +29,17 @@ class Train(models.Model):
 
     def get_absolute_url(self):
         return reverse('trains:detail', kwargs={'pk': self.pk}) #check object name
+
+    def clean(self):
+        if self.train_from_city == self.train_to_city:
+            raise ValidationError('Город прибытия не может быть городом отправления')
+        qs=Train.objects.filter(train_to_city = self.train_to_city,
+                                train_from_city = self.train_from_city,
+                                train_travel_time= self.train_travel_time
+                                ).exclude(pk=self.pk)
+        if qs.exists():
+            raise ValidationError('Такой поезд уже имеется')
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)

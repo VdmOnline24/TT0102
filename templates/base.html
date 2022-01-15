@@ -1,9 +1,13 @@
 <!-- Задать сеансовые переменные -->
 {% url 'cities:homepage' as url_app_home %}
+{% url 'trains:trains_page' as url_app_trains %}
+{% load static %}
 
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="shortcut icon" href="{%  static 'images/favicon.ico' %}"/>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,8 +33,10 @@
                   Города
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+            <li class="nav-item ">
+              <a class="nav-link {% if request.path == url_app_trains %}active{% endif %}" aria-current="page" href="{{ url_app_trains }}">
+                  Поезда
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Pricing</a>

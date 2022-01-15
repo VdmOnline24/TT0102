@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+
+    {{ object.train_name }}
+
+{% endblock Title %}
+
+{% block Body %}
+
+    <h1>Поезд</h1>
+    <div class="row">
+        <div class="col-md">
+                <p>Индекс             : {{ object.id }}</p>
+                <p>Наименование поезда: {{ object.train_name }}</p>
+                <p>Следует из города  : {{ object.train_from_city }}</p>
+                <p>Следует в город    : {{ object.train_to_city }}</p>
+                <p>Время в пути       : {{ object.train_travel_time }}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="dropdown">
+      <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Выберите действие
+      </a>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <li><a class="dropdown-item" href="{% url 'trains:trains_page' %}">Назад к списку</a></li>
+        <li><a class="dropdown-item" href="{% url 'trains:train_update' object.pk %}">Изменить</a></li>
+        <li><a class="dropdown-item" href="{% url 'trains:train_create' %}">Создать</a></li>
+        <li><a class="dropdown-item bg-danger text-light" href="{% url 'trains:train_delete' object.pk %}">Удалить</a></li>
+      </ul>
+    </div>
+
+{% endblock Body %}

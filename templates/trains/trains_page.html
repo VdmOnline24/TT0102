@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+
+    Список городов
+
+{% endblock Title %}
+
+{% block Body %}
+
+    <h1>Список поездов</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td class="">Номер поезда</td>
+                    <td class="">Станция отправления</td>
+                    <td class="">Станция назначения</td>
+                    <td class="">Время в пути</td>
+                    <td class="">&nbsp;</td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for zapis in page_obj %}
+                    <tr>
+                        <td class="col-md-2">
+                             {{ zapis.train_name }}
+                        </td>
+                        <td class="col-md-3">
+                             {{ zapis.train_from_city }}
+                        </td>
+                        <td class="col-md-3">
+                             {{ zapis.train_to_city }}
+                        </td>
+                        <td class="col-md-2">
+                             {{ zapis.train_travel_time }}
+                        </td>
+                        <td class="col-md-1">
+                            <a href="{% url 'trains:train_detail' pk=zapis.id %}">
+                                <button type="submit" class="btn btn-outline-primary">Подробно</button>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- Pagination Controls from the Django Doc -->
+
+<!-- Pagination controls from Getbootstrap.com -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-left">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+        {% endif %}
+        {% for page in page_obj.paginator.page_range %}
+            {% if page == page_obj.number %}
+                <li class="page-item active" aria-current="page">
+            {% else %}
+                <li class="page-item">
+            {% endif %}
+
+                    <a class="page-link" href="?page={{ page }}">
+                        {{ page }}
+                    </a>
+                </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <!-- Форма -->
+
+
+
+{% endblock Body %}
